@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	创建章节
+{% endblock %}
+
+{% block nav_blog_active %}active{% endblock %}
+
+{% block content %}
+	<div class='container'>
+		<div class='col'>
+			<h1>创建章节</h1>
+			<hr>
+			<form action='/blog/create/' method='post'>
+				{% csrf_token %}
+
+				{{ create_form.media }}
+				{{ create_form.as_p }}
+
+				<center>
+					<button type="submit" class="btn btn-primary">
+						创建
+					</button>
+				</center>
+			</form>
+		</div>
+	</div>
+{% endblock %}

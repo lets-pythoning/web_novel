@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	我的小说
+{% endblock %}
+
+{% block nav_blog_active %}active{% endblock %}
+
+{% block content %}
+	<div class='container'>
+		<div class='row'>
+			<div class='col-sm-8 col-md-9 col-lg-10'>
+				<div class='panel panel-default'>
+					<div class='panel-heading'>
+						{% block blog_list_title %}
+							<h4>章节列表</h4>
+						{% endblock %}
+					</div>
+
+					<div class='panel-body'>
+						{% for blog in blogs %}
+							<a href='{% url "blog_detail" blog.id %}'>
+								<h3>{{ blog.title }}</h3>
+							</a>
+
+							<p>
+								<span class='glyphicon glyphicon-tag'></span>
+								分类:
+								<a href='{% url "blogs_with_type" blog.blog_type.id %}'>
+									{{ blog.blog_type }}&nbsp;&nbsp;
+								</a>
+
+								<span class='glyphicon glyphicon-time'></span>
+								发表日期: {{ blog.created_time|date:"Y-m-d" }}&nbsp;&nbsp;
+
+								<span class='glyphicon glyphicon-eye-open'></span>
+								阅读量: {{ blog.get_read_num }}
+							</p>
+
+							<p>
+								{% autoescape off %}
+									{{ blog.content|striptags|truncatechars:120 }}
+								{% endautoescape %}
+							</p>
+							<hr>
+							<br>
+						{% empty %}
+							<p class='center-text'>-- 还没有上传章节, 敬请期待 --</p>
+						{% endfor %}
+					</div>
+				</div>
+
+				<center>
+					<ul class='pagination'>
+						<li>
+							{% if page_of_blogs.has_previous %}
+								<a href='?page={{ page_of_blogs.previous_page_number }}' aria-label='Previous'>
+									<span aria-hidden='true'>&laquo;</span>
+								</a>
+							{% else %}
+								<span aria-hidden='true'>&laquo;</span>
+							{% endif %}
+						</li>
+
+						{% for page_num in page_of_blogs.paginator.page_range %}
+							{% if page_num == page_of_blogs.number %}
+								<li class='active'>
+									<span>{{ page_num }}</span>
+								</li>
+							{% else %}
+								<li>
+									<a href='?page={{ page_num }}'>{{ page_num }}</a>
+								</li>
+							{% endif %}
+						{% endfor %}
+
+						<li>
+							{% if page_of_blogs.has_next %}
+								<a href='?page={{ page_of_blogs.next_page_number }}' aria-label='Next'>
+									<span aria-hidden='true'>&raquo;</span>
+								</a>
+							{% else %}
+								<span aria-hidden='true'>&raquo;</span>
+							{% endif %}
+						</li>
+					</ul>
+
+					<p>
+						共有{{ page_of_blogs.paginator.count }}章;
+						当前第{{ page_of_blogs.number }}页,
+						共{{ page_of_blogs.paginator.num_pages}}页
+					</p>
+				</center>
+			</div>
+
+			<div class='hidden-xs col-sm-4 col-md-3 col-lg-2'>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4>
+							章节分类
+						</h4>
+					</div>
+					<div class="panel-body">
+						<ul class='pigeonhole'>
+							{% for blog_type in blog_types %}
+								<li>
+									<a href='{% url "blogs_with_type" blog_type.id %}'>
+										{{ blog_type.type_name }}&nbsp;
+									</a>
+									<span class='badge'>
+										{{ blog_type.blog_count }}
+									</span>
+								</li>
+							{% empty %}
+								<li>暂无分类</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+
+				<div class='panel panel-default'>
+					<div class='panel-heading'>
+						<h4>
+							日期归档
+						</h4>
+					</div>
+
+					<div class='panel-body'>
+						<ul class='pigeonhole'>
+							{% for blog_date, blog_count in blog_dates.items %}
+								<li>
+									<a href='{% url "blogs_with_date" blog_date.year blog_date.month %}'>
+										{{ blog_date|date:'Y年m月' }}
+									</a>
+									<span class='badge'>
+										{{ blog_count }}
+									</span>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<link rel="stylesheet" href="{% static 'blog/blog_list.css' %}">
+
+{% endblock %}

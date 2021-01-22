@@ -1,0 +1,36 @@
+h3.hometext-center {
+	font-size: 210%;
+	text-align: center;
+	margin-top: 5em;
+	margin-bottom: 0.5em;
+}
+
+h3#hot_data {
+	margin: none!important;
+}
+
+h5.hometext-smaller {
+	text-align: center;
+	margin-top: none;
+	margin-bottom: 4em;
+}
+
+div#container {
+	margin: 0 auto;
+	height: 20em;
+	min-width: 20em;
+	max-width: 30em;
+}
+
+div#hot_data {
+	font-size: 130%;
+	margin: none;
+}
+
+ul {
+	list-style-type: none;
+}
+
+li {
+	margin-bottom: 0.25em;
+}

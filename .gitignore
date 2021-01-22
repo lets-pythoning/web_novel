@@ -1,0 +1,12 @@
+*.sqlite3
+manage.py
+/media/upload/*
+/blog/migrations
+/blog/__pycache__
+/comment/migrations
+/comment/__pycache__
+/read_statistics/migrations
+/read_statistics/__pycache__
+/static/admin
+/static/bootstrap-3.3.7
+/web_novel/__pycache__

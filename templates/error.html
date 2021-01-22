@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+	我的小说|错误
+{% endblock %}
+
+{% block nav_blog_active %}active{% endblock %}
+
+{% block content %}
+	<style media="screen">
+		ul { list-style-type: none; }
+		* { padding: 0; }
+	</style>
+
+	<center>
+		<h2 style="padding-top: 5em;">{{ message }}</h2>
+		<br/>
+		<h3>
+			<a href="{{ redirect_to }}">返回</a>
+		</h3>
+	<center/>
+{% endblock %}
